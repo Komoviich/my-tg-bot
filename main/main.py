@@ -22,6 +22,7 @@ dp = Dispatcher(storage=MemoryStorage())
 dp.include_router(main_router)
 dp.include_router(game_router)
 
+
 async def set_commands(bot: Bot):
     commands = [
         BotCommand(command="/start", description="Начать работу с ботом"),
