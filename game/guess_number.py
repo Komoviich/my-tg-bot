@@ -1,3 +1,4 @@
+from aiogram import types
 import random
 
 class GuessNumberGame:

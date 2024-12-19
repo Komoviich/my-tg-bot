@@ -1,5 +1,5 @@
 import aiohttp
-from aiogram import Router
+from aiogram import Router, types
 from aiogram.types import Message, CallbackQuery
 from aiogram.filters import Command
 from keyboard.keyboard import inline_keyboard
@@ -16,12 +16,18 @@ async def start_command(message: Message):
         reply_markup=inline_keyboard
     )
 
+@router.callback_query(lambda c: c.data == "choose_profession")
+async def handle_choose_profession(callback_query: CallbackQuery):
+    """Обработчик кнопки выбора профессии."""
+    from handlers.choose_profession import start_choose
+    await start_choose(callback_query.message)
+
 # Обработчик нажатия на кнопку "Привет"
 @router.callback_query(lambda c: c.data == "start")
 async def handle_start(callback_query: CallbackQuery):
     user_name = callback_query.from_user.first_name or "друг"
     await callback_query.message.answer(f"Привет, {user_name}! Рад тебя видеть!")
-    await callback_query.answer()  # Закрытие уведомления в интерфейсе Telegram
+    await callback_query.answer()
 
 # Обработчик нажатия на кнопку "Стоп"
 @router.callback_query(lambda c: c.data == "stop")
